@@ -1,4 +1,4 @@
-# AWS State Module
+# Terraform State Module
 
 Terraform module for creating an S3 bucket for Terraform state management with native S3 locking support and lifecycle policies for noncurrent version management.
 
@@ -18,7 +18,7 @@ Native S3 locking (`use_lockfile = true`) requires Terraform 1.10 or later, elim
 
 ```hcl
 module "terraform_state" {
-  source = "git@github.com:your-org/aws__shared-modules--aws-state.git"
+  source = "git@github.com:your-org/aws__shared-modules--terraform-state.git"
 
   prefix = "my-project"
 }
@@ -28,7 +28,7 @@ module "terraform_state" {
 
 ```hcl
 module "terraform_state" {
-  source = "git@github.com:your-org/aws__shared-modules--aws-state.git"
+  source = "git@github.com:your-org/aws__shared-modules--terraform-state.git"
 
   # Use exact bucket name instead of prefix
   # Note: Must be globally unique across all AWS accounts
@@ -40,7 +40,7 @@ module "terraform_state" {
 
 ```hcl
 module "terraform_state" {
-  source = "git@github.com:your-org/aws__shared-modules--aws-state.git"
+  source = "git@github.com:your-org/aws__shared-modules--terraform-state.git"
 
   prefix = "my-project"
 
@@ -74,13 +74,13 @@ terraform {
 
 ## Inputs
 
-| Name                              | Description                                                                                                                                          | Type          | Default                                          | Required |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------ | :------: |
-| prefix                            | Prefix for the S3 bucket name. A random suffix will be appended. Either prefix or bucket_name must be provided. Max 40 characters.                   | `string`      | `null`                                           |    no    |
-| bucket_name                       | Exact S3 bucket name. If provided, prefix is ignored. Must be globally unique across all AWS accounts. 3-63 characters.                              | `string`      | `null`                                           |    no    |
-| noncurrent_version_retention_days | Number of days to retain noncurrent object versions before deletion. Set to `null` to disable lifecycle management. Minimum value is 1 when enabled. | `number`      | `90`                                             |    no    |
-| tags                              | Tags to apply to all resources created by this module.                                                                                               | `map(string)` | `{"Environment": "shared", "Terraform": "true"}` |    no    |
-| force_destroy                     | When true, allows S3 bucket destruction even with objects. Use with caution.                                                                         | `bool`        | `false`                                          |    no    |
+| Name                              | Description                                                                                                                                          | Type          | Default                                                                            | Required |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ---------------------------------------------------------------------------------- | :------: |
+| prefix                            | Prefix for the S3 bucket name. A random suffix will be appended. Either prefix or bucket_name must be provided. Max 40 characters.                   | `string`      | `null`                                                                             |    no    |
+| bucket_name                       | Exact S3 bucket name. If provided, prefix is ignored. Must be globally unique across all AWS accounts. 3-63 characters.                              | `string`      | `null`                                                                             |    no    |
+| noncurrent_version_retention_days | Number of days to retain noncurrent object versions before deletion. Set to `null` to disable lifecycle management. Minimum value is 1 when enabled. | `number`      | `90`                                                                               |    no    |
+| tags                              | Tags to apply to all resources created by this module.                                                                                               | `map(string)` | `{"ManagedBy": "Terraform", "RootModule": "aws__shared-modules--terraform-state"}` |    no    |
+| force_destroy                     | When true, allows S3 bucket destruction even with objects. Use with caution.                                                                         | `bool`        | `false`                                                                            |    no    |
 
 > **Note**: Either `prefix` or `bucket_name` must be provided. When using `prefix`, a random suffix is appended (e.g., `my-project-terraform-state-abc123`). When using `bucket_name`, you must ensure the name is globally unique across all AWS accounts.
 >
