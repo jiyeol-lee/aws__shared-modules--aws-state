@@ -29,8 +29,8 @@ variable "tags" {
   description = "Tags to apply to all resources created by this module."
   type        = map(string)
   default = {
-    Environment = "shared"
-    Terraform   = "true"
+    ManagedBy  = "Terraform"
+    RootModule = "aws__shared-modules--terraform-state"
   }
 }
 
